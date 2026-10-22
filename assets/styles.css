@@ -16,26 +16,11 @@
   --danger: #A33A26;
   --font: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #0F1612;
-    --surface: #17211B;
-    --ink: #E8EEE7;
-    --muted: #A3B0A7;
-    --line: #2B3A31;
-    --forest: #8CC4A5;
-    --forest-hover: #A9D6BC;
-    --on-forest: #0F1612;
-    --moss: #1F2D25;
-    --band: #122A1F;
-    --danger: #F08A73;
-  }
-}
 
-/* Genesys Messenger: keep its iframe transparent so the launcher floats on the page.
-   When the page uses a dark color scheme and the Messenger's document doesn't, browsers
-   paint the iframe with an opaque background (the white box). Matching the scheme fixes it. */
-iframe { color-scheme: normal; }
+/* Light-only on purpose. If the page used a dark color scheme, browsers would paint the
+   Genesys Messenger iframe with an opaque white background behind the launcher. */
+:root { color-scheme: light; }
+iframe { color-scheme: light; background: transparent; }
 
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
