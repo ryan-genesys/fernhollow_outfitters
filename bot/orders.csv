@@ -1,0 +1,6 @@
+orderNumber,email,status,carrier,trackingNumber,statusDetail,items,deliveredDate,returnEligible
+FH-100245,alex.rivera@example.com,Shipped,UPS,1Z4F8E190310427781,Arriving Tuesday October 27,Trail Shell Jacket (M),,No
+FH-100318,priya.shah@example.com,Processing,,,Ships within 1 business day,Switchback 35L Pack (M/L),,No
+FH-100422,sam.okafor@example.com,Delivered,USPS,9400111202555842761234,Delivered Thursday October 15,Basalt Mid Hiking Boot (10),2026-10-15,Yes
+FH-100517,jordan.lee@example.com,Delayed,FedEx,771234567890,Delayed in transit. It was due Tuesday October 20,Hollow 2P Tent,,No
+FH-100609,casey.nguyen@example.com,Delivered,UPS,1Z4F8E190398765432,Delivered Monday August 3,Cedar Down Hoodie (S),2026-08-03,No

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Demo guide | Fernhollow Outfitters</title>
+<meta name="description" content="Internal guide for presenting the Genesys Cloud Web Messaging demo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+
+<!-- Genesys Cloud Web Messaging: Messenger deployment snippet -->
+<script type="text/javascript" charset="utf-8">
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod',
+    deploymentId: '10b95755-9512-4bc6-a2bb-f13ebb0fedc3'
+  });
+</script>
+</head>
+<body data-page="guide">
+<a class="skip" href="#main">Skip to content</a>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<div class="wrap guide">
+  <div class="page-head">
+    <h1>Demo guide</h1>
+    <p>For Genesys consultants presenting this site. Customers never see this page; it&rsquo;s linked only from the demo bar.</p>
+  </div>
+
+  <h2>This deployment</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Setting</th><th>Value</th></tr>
+    <tr><td>Region</td><td><code>apps.mypurecloud.com</code> (Americas, US East)</td></tr>
+    <tr><td>Environment</td><td><code>prod</code></td></tr>
+    <tr><td>Deployment ID</td><td><code>10b95755-9512-4bc6-a2bb-f13ebb0fedc3</code></td></tr>
+    <tr><td>Snippet location</td><td>The <code>&lt;head&gt;</code> of every page, so the conversation follows the shopper between pages</td></tr>
+  </table></div>
+
+  <h3>Before you present</h3>
+  <ul>
+    <li>Serve the site over http or https. The Messenger won&rsquo;t load from a file opened directly on disk.</li>
+    <li>If the deployment restricts domains, add the host you&rsquo;re serving from.</li>
+    <li>Log in to Genesys Cloud as an agent on the Fernhollow queue and go On Queue.</li>
+    <li>Open the browser console to watch the tracking events the site records.</li>
+  </ul>
+
+  <h2>Scenarios</h2>
+  <h3>1. Order status, handled by the bot</h3>
+  <ol>
+    <li>Open the Messenger from any page and type &ldquo;Where&rsquo;s my order?&rdquo;</li>
+    <li>Give order <code>FH-100245</code> and email <code>alex.rivera@example.com</code>.</li>
+    <li>Fern replies that it shipped with UPS and arrives Tuesday. No agent needed.</li>
+  </ol>
+  <h3>2. Delayed order, escalated to an agent</h3>
+  <ol>
+    <li>Ask Fern about order <code>FH-100517</code>, <code>jordan.lee@example.com</code>.</li>
+    <li>Fern sees the order is delayed, apologizes, and transfers to the queue with the order details attached.</li>
+    <li>Point out that the agent doesn&rsquo;t have to ask for the order number again.</li>
+  </ol>
+  <h3>3. Start a return</h3>
+  <ol>
+    <li>On the Returns page, choose &ldquo;Start a return with Fern.&rdquo;</li>
+    <li>Use <code>FH-100422</code>, <code>sam.okafor@example.com</code>. The order qualifies and Fern confirms the label.</li>
+    <li>Repeat with <code>FH-100609</code>, <code>casey.nguyen@example.com</code>. It&rsquo;s past 60 days, so Fern offers the warranty team.</li>
+  </ol>
+  <h3>4. Product question, routed in context</h3>
+  <ol>
+    <li>Open the Trail Shell Jacket and choose &ldquo;Chat with a specialist.&rdquo;</li>
+    <li>The conversation starts with <code>entryPoint = product-question</code> and the page title, so the flow can skip the bot menu and route to a specialist.</li>
+  </ol>
+  <h3>5. Digital User Tracking (next phase)</h3>
+  <ol>
+    <li>Browse Jackets, open a product, add it to the cart, and open the cart.</li>
+    <li>Start a chat. Once tracking is on, the agent sees that journey alongside the conversation.</li>
+  </ol>
+
+  <h2>Test orders</h2>
+  <p>The same data is in <code>bot/orders.csv</code> for the Architect data table.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Order</th><th>Email</th><th>Status</th><th>Bot outcome</th></tr>
+    <tr><td><code>FH-100245</code></td><td>alex.rivera@example.com</td><td>Shipped</td><td>Self-service</td></tr>
+    <tr><td><code>FH-100318</code></td><td>priya.shah@example.com</td><td>Processing</td><td>Self-service</td></tr>
+    <tr><td><code>FH-100422</code></td><td>sam.okafor@example.com</td><td>Delivered, return eligible</td><td>Return started</td></tr>
+    <tr><td><code>FH-100517</code></td><td>jordan.lee@example.com</td><td>Delayed</td><td>Escalate to agent</td></tr>
+    <tr><td><code>FH-100609</code></td><td>casey.nguyen@example.com</td><td>Delivered, past 60 days</td><td>Offer warranty agent</td></tr>
+  </table></div>
+
+  <h2>Entry points</h2>
+  <p>Every chat button sets <code>entryPoint</code>, <code>pageTitle</code>, and <code>pagePath</code> as custom attributes before opening the Messenger.</p>
+  <div class="table-wrap"><table>
+    <tr><th>entryPoint</th><th>Where it&rsquo;s set</th></tr>
+    <tr><td><code>home-order-help</code></td><td>Home page, &ldquo;Chat with Fern&rdquo;</td></tr>
+    <tr><td><code>product-question</code></td><td>Product pages, &ldquo;Chat with a specialist&rdquo;</td></tr>
+    <tr><td><code>cart-help</code></td><td>Cart summary</td></tr>
+    <tr><td><code>order-status</code></td><td>Order status page, Fern panel</td></tr>
+    <tr><td><code>order-delayed</code></td><td>Order status result for a delayed order</td></tr>
+    <tr><td><code>return-outside-window</code></td><td>Order status result past the return window</td></tr>
+    <tr><td><code>returns</code></td><td>Returns page</td></tr>
+    <tr><td><code>help-center</code></td><td>Help center chat card</td></tr>
+    <tr><td><code>footer</code></td><td>Footer &ldquo;Chat with us&rdquo;</td></tr>
+  </table></div>
+  <p>Chats started from the Messenger&rsquo;s own launcher have no <code>entryPoint</code>; treat that as the general menu.</p>
+
+  <h2>Tracking events</h2>
+  <p>Recorded by <code>track()</code> in <code>assets/site.js</code>. They log to the console now and go to Genesys once tracking is enabled.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Event</th><th>When</th><th>Attributes</th></tr>
+    <tr><td><code>category_viewed</code></td><td>Shop page loads</td><td>category</td></tr>
+    <tr><td><code>product_viewed</code></td><td>Product page loads</td><td>productId, productName, category, price</td></tr>
+    <tr><td><code>added_to_cart</code></td><td>Add to cart</td><td>productId, productName, size, price</td></tr>
+    <tr><td><code>cart_viewed</code></td><td>Cart page loads</td><td>itemCount, cartValue</td></tr>
+    <tr><td><code>checkout_started</code></td><td>Check out button</td><td>cartValue</td></tr>
+    <tr><td><code>order_lookup</code></td><td>Order status form submitted</td><td>orderNumber, found, status</td></tr>
+    <tr><td><code>order_status_viewed</code>, <code>return_policy_viewed</code>, <code>help_viewed</code></td><td>Those pages load</td><td>none</td></tr>
+    <tr><td><code>chat_opened</code></td><td>Any site chat button</td><td>entryPoint</td></tr>
+  </table></div>
+</div>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

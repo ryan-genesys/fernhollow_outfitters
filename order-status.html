@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Check your order | Fernhollow Outfitters</title>
+<meta name="description" content="Check the status of a Fernhollow order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+
+<!-- Genesys Cloud Web Messaging: Messenger deployment snippet -->
+<script type="text/javascript" charset="utf-8">
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.mypurecloud.com/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod',
+    deploymentId: '10b95755-9512-4bc6-a2bb-f13ebb0fedc3'
+  });
+</script>
+</head>
+<body data-page="order-status">
+<a class="skip" href="#main">Skip to content</a>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<div class="wrap">
+  <div class="page-head">
+    <h1>Check your order</h1>
+    <p>Enter your order number and the email you used at checkout.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <form class="form" id="order-form" novalidate>
+        <label>Order number
+          <span class="hint">It starts with FH and is in your confirmation email.</span>
+          <input name="order" autocomplete="off" placeholder="FH-123456" required>
+        </label>
+        <label>Email
+          <input name="email" type="email" autocomplete="email" required>
+        </label>
+        <div><button class="btn primary" type="submit">Check order</button></div>
+      </form>
+      <div id="order-result" aria-live="polite"></div>
+    </div>
+    <aside class="fern" aria-labelledby="fern-title">
+      <h2 id="fern-title">Or ask Fern</h2>
+      <p>Fern is our virtual assistant. Chat any time, and Fern can:</p>
+      <ul>
+        <li>Check where your order is</li>
+        <li>Start a return or exchange</li>
+        <li>Connect you with our support team, 7 am to 9 pm PT</li>
+      </ul>
+      <button class="btn light" type="button" data-open-messenger="order-status">Chat with Fern</button>
+    </aside>
+  </div>
+</div>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="assets/site.js"></script>
+</body>
+</html>
