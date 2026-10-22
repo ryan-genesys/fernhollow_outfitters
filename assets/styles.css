@@ -32,6 +32,11 @@
   }
 }
 
+/* Genesys Messenger: keep its iframe transparent so the launcher floats on the page.
+   When the page uses a dark color scheme and the Messenger's document doesn't, browsers
+   paint the iframe with an opaque background (the white box). Matching the scheme fixes it. */
+iframe { color-scheme: normal; }
+
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 [hidden] { display: none !important; }
