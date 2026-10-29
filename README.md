@@ -52,57 +52,29 @@ In Architect, read those attributes with **Get Participant Data** in the inbound
 
 ### Architecture
 
+The Architect exports in `architect/` implement this with your org's objects:
+
 ```
 Messenger deployment
-  -> Inbound message flow "Fernhollow Web Messaging"
+  -> Inbound message flow "Web Messenger Training"
        Get Participant Data: entryPoint, pageTitle, pagePath
-       entryPoint = product-question  -> Transfer to ACD "Fernhollow Gear Specialists"
-       otherwise                      -> Call Digital Bot Flow "Fern Virtual Assistant"
-                                            exit: escalate -> Transfer to ACD "Fernhollow Web Support"
-                                            exit: resolved -> Disconnect
+       Set greeting, routingReason, and priority from entryPoint
+       entryPoint is product-question, order-delayed, or return-outside-window
+         -> greet in context -> Transfer to ACD "Training"
+       otherwise
+         -> Call Digital Bot Flow "Web Messenger Training Digital Bot" (Fern)
+         -> Fern exits only when a person is needed -> Transfer to ACD "Training"
 ```
 
-### Intents
-
-| Intent | Sample utterances | Slots | Outcome |
-|---|---|---|---|
-| OrderStatus | "Where's my order?", "Track my package", "Has my order shipped?" | OrderNumber, Email | Look up the order and reply with status. Delayed orders escalate. |
-| StartReturn | "I want to return something", "Start a return", "This doesn't fit" | OrderNumber, Email | If delivered within 60 days, confirm the return and say a label is emailed. Otherwise offer the warranty team. |
-| TalkToAgent | "Agent", "Talk to a person", "Representative" | none | Escalate. |
-| Fallback | anything unrecognized twice | none | Escalate. |
-
-### Slot types
-
-- **OrderNumber:** a regular-expression slot type matching `FH-?\d{6}`. Normalize to `FH-######` before the lookup.
-- **Email:** a regular-expression slot type for email addresses.
-
-### Data
-
-Create a data table named **Fernhollow Orders** with `orderNumber` as the key and the other columns from `bot/orders.csv` as string fields, then import the CSV. In the bot, use **Data Table Lookup** on the order number and check that the email matches before revealing anything.
-
-For a closer-to-production pattern, swap the data table for a web services data action against an order API. The bot logic stays the same.
-
-### Escalation context
-
-Before the bot exits to an agent, set participant data so the agent sees why:
-
-- `botIntent`: `OrderStatus`, `StartReturn`, or `TalkToAgent`
-- `orderNumber`: when collected
-- `escalationReason`: for example `order-delayed`, `outside-return-window`, `customer-request`
-
-Delayed orders are a good place to show raised priority on the transfer.
-
-### Suggested object names
-
-| Object | Name |
+| File | What it is |
 |---|---|
-| Messenger configuration | Fernhollow Messenger (primary color `#1F4A37`) |
-| Inbound message flow | Fernhollow Web Messaging |
-| Digital bot flow | Fern Virtual Assistant |
-| Data table | Fernhollow Orders |
-| Queues | Fernhollow Web Support, Fernhollow Gear Specialists |
+| `architect/Web_Messenger_Training_v1-1.yaml` | Agent-only version: contextual greeting, routing reason, priority |
+| `architect/Web_Messenger_Training_Digital_Bot_v1-1.yaml` | Same, plus Fern for chats the site can't classify |
+| `architect/BOT_BUILD.md` | How to build Fern's intents, slots, data table lookup, and tasks |
 
-Object and action names can vary by Genesys Cloud release, so check them in your org.
+Priority by entry point: delayed order 10, return past window 5, cart help 5, product question 3, everything else 0. The `routingReason` participant attribute gives the agent a plain-English reason for the chat.
+
+Both exports use the flow name "Web Messenger Training", so importing one replaces the other. Rename one before importing if you want both.
 
 ## Digital User Tracking (next phase)
 

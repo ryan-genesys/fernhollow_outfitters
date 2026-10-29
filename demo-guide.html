@@ -6,6 +6,10 @@
 <meta name="color-scheme" content="light">
 <title>Demo guide | Fernhollow Outfitters</title>
 <meta name="description" content="Internal guide for presenting the Genesys Cloud Web Messaging demo.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1F4A37">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
@@ -50,7 +54,7 @@
   <ul>
     <li>Serve the site over http or https. The Messenger won&rsquo;t load from a file opened directly on disk.</li>
     <li>If the deployment restricts domains, add the host you&rsquo;re serving from.</li>
-    <li>Log in to Genesys Cloud as an agent on the Fernhollow queue and go On Queue.</li>
+    <li>Log in to Genesys Cloud as an agent on the Training queue and go On Queue.</li>
     <li>Open the browser console to watch the tracking events the site records.</li>
   </ul>
 
@@ -64,19 +68,19 @@
   <h3>2. Delayed order, escalated to an agent</h3>
   <ol>
     <li>Ask Fern about order <code>FH-100517</code>, <code>jordan.lee@example.com</code>.</li>
-    <li>Fern sees the order is delayed, apologizes, and transfers to the queue with the order details attached.</li>
-    <li>Point out that the agent doesn&rsquo;t have to ask for the order number again.</li>
+    <li>Fern sees the order is delayed, apologizes, and transfers to the Training queue.</li>
+    <li>Point out that the agent sees the whole bot conversation, so they don&rsquo;t have to ask for the order number again.</li>
   </ol>
   <h3>3. Start a return</h3>
   <ol>
     <li>On the Returns page, choose &ldquo;Start a return with Fern.&rdquo;</li>
-    <li>Use <code>FH-100422</code>, <code>sam.okafor@example.com</code>. The order qualifies and Fern confirms the label.</li>
+    <li>Ask Fern to start a return with <code>FH-100422</code>, <code>sam.okafor@example.com</code>. The order qualifies and Fern confirms the label.</li>
     <li>Repeat with <code>FH-100609</code>, <code>casey.nguyen@example.com</code>. It&rsquo;s past 60 days, so Fern offers the warranty team.</li>
   </ol>
   <h3>4. Product question, routed in context</h3>
   <ol>
     <li>Open the Trail Shell Jacket and choose &ldquo;Chat with a specialist.&rdquo;</li>
-    <li>The conversation starts with <code>entryPoint = product-question</code> and the page title, so the flow can skip the bot menu and route to a specialist.</li>
+    <li>The conversation starts with <code>entryPoint = product-question</code> and the page title, so the flow skips Fern, greets the customer about that product, and routes to Training at priority 3 with the product name in <code>routingReason</code>.</li>
   </ol>
   <h3>5. Digital User Tracking (next phase)</h3>
   <ol>
